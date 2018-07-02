@@ -25,6 +25,15 @@ class schedulers {
      * */
 
 
+    /**
+     * Задачки
+     * */
+
+    
+    /**
+     * Сколько разных потоков будет выведено в результате выполнения следующего теста? Один или больше?
+     * (пример: Thread-1, Thread-2, Thread-3 - 3 потока)
+     * */
     @Test
     fun newThread() {
         Observable.just(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
@@ -34,8 +43,11 @@ class schedulers {
         Thread.sleep(1000)
     }
 
+    /**
+     * Тот же вопрос
+     * */
     @Test
-    fun newThreadInNestedStream() {
+    fun newThreadInNestedStream2() {
         Observable.just(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
                 .flatMap {
                     return@flatMap Observable.just(it)
@@ -46,12 +58,15 @@ class schedulers {
         Thread.sleep(1000)
     }
 
+    /**
+     * Тот же вопрос
+     * */
     @Test
-    fun newThreadInNestedStream2() {
+    fun newThreadInNestedStream() {
         Observable.just(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
                 .flatMap {
                     return@flatMap Observable.just(it)
-                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(Schedulers.newThread())
                 }
                 .subscribe({ println("value: $it, thread: ${Thread.currentThread().name}") })
 

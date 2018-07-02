@@ -46,6 +46,18 @@ class `05_concatmap_flatmap_switchmap` {
     }
 
     /**
+     * flatMap можно превратить в concatMap просто установив параметр maxConcurrency в единицу
+     * */
+    @Test
+    fun test2_5() {
+        Observable.just(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+                .flatMap({ longOperation (it) }, 1)
+                .subscribe({ println("value = $it") })
+
+        Thread.sleep(1500)
+    }
+
+    /**
      * Если нужно выполнять операции асинхронно, но при этом получить результаты в том порядке
      * в каком они были выполнены, то существует оператор concatMapEager
      * */

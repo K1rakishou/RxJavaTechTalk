@@ -18,17 +18,16 @@ class `04_rxjava_multicasting` {
     }
 
     /**
-     * Здесь нам на помощь приходит ConnectableObservable, которой превращает холодный стрим в горячий.
+     * Здесь нам на помощь приходит ConnectableObservable, который превращает холодный стрим в горячий.
      * Теперь стримы получают ивенты одновременно.
      * */
     @Test
     fun test2() {
         val observables = Observable.just(1, 2, 3, 4, 5)
                 .publish()
+                .autoConnect(2)
 
         observables.subscribe({ value -> println("observer1 = $value") }, { }, { println("OnComplete") })
         observables.subscribe({ value -> println("observer2 = $value") }, { }, { println("OnComplete") })
-
-        observables.connect()
     }
 }

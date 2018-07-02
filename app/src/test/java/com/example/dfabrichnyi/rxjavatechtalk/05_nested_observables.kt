@@ -1,4 +1,5 @@
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import org.junit.Test
 
 class `05_nested_observables` {

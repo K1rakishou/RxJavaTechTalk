@@ -14,9 +14,10 @@ class `06_rxjava_backpressure` {
 
     /**
      * Backpressure - это механизм общения даунстрима и апстрима. У flowable есть собственный тип сабскрайбера -
-     * FlowableSubscriber у которого есть Subscription (в отличии от Disposable у других типов) и у него есть метод request.
-     * Этот метод передаёт в апстрим количество элементов которое просит даунстрим. Каждый оператор в flowable
-     * обрабатывает этот метод из-за этого backpressure работает для flowable по-умолчанию (в отличии от других типов)
+     * FlowableSubscriber у которого есть параметр Subscription (в отличии от Disposable у других типов)
+     * и у него есть метод request. Этот метод передаёт в апстрим количество элементов которое просит даунстрим.
+     * Каждый оператор в flowable обрабатывает этот метод из-за этого backpressure работает для flowable
+     * по-умолчанию (в отличии от других типов)
      * */
     @Test
     fun testOk() {
@@ -29,49 +30,27 @@ class `06_rxjava_backpressure` {
     }
 
 
+    /**
+     * По-умолчанию subscribe вызывает метод реквест с максимально возможным значением - Long.MAX_VALUE
+     * */
+    @Test
+    fun test123() {
+        Flowable.create<Int>({ emitter ->
+            for (i in 0..1_000_000_000) {
+                if (!emitter.isCancelled) {
+                    println("requested = ${emitter.requested()}")
+                    emitter.onNext(i)
+                }
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            emitter.onComplete()
+        }, BackpressureStrategy.MISSING)
+                .map { Data(it) }
+                .subscribe({
+                    println("id = ${it.id}")
+                    Thread.sleep(50)
+                }, { error -> error.printStackTrace() })
+    }
 
 
     /**
@@ -90,60 +69,12 @@ class `06_rxjava_backpressure` {
 
             emitter.onComplete()
         }, BackpressureStrategy.MISSING)
-        .map { Data(it) }
-        .subscribe({
-            println("id = ${it.id}")
-            Thread.sleep(50)
-        }, { error -> error.printStackTrace() })
+                .map { Data(it) }
+                .subscribe({
+                    println("id = ${it.id}")
+                    Thread.sleep(50)
+                }, { error -> error.printStackTrace() })
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
@@ -160,14 +91,14 @@ class `06_rxjava_backpressure` {
 
             emitter.onComplete()
         }, BackpressureStrategy.MISSING)
-        .map { Data(it) }
-        .observeOn(Schedulers.io())
-        .subscribe({
-            println("id = ${it.id}")
-            Thread.sleep(50)
-        }, { error ->
-            error.printStackTrace()
-        })
+                .map { Data(it) }
+                .observeOn(Schedulers.io())
+                .subscribe({
+                    println("id = ${it.id}")
+                    Thread.sleep(50)
+                }, { error ->
+                    error.printStackTrace()
+                })
     }
 
     /**
@@ -185,54 +116,15 @@ class `06_rxjava_backpressure` {
 
             emitter.onComplete()
         }
-        .map { Data(it) }
-        .observeOn(Schedulers.io())
-        .subscribe({
-            println("id = ${it.id}")
-            Thread.sleep(50)
-        }, { error ->
-            error.printStackTrace()
-        })
+                .map { Data(it) }
+                .observeOn(Schedulers.io())
+                .subscribe({
+                    println("id = ${it.id}")
+                    Thread.sleep(50)
+                }, { error ->
+                    error.printStackTrace()
+                })
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
@@ -242,9 +134,43 @@ class `06_rxjava_backpressure` {
     @Test
     fun testInterval() {
         Flowable.interval(10, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
                 .subscribe({
                     println("time: ${Date().time}, id = ${it}")
                     Thread.sleep(1000)
+                })
+
+        Thread.sleep(15000)
+    }
+
+    @Test
+    fun testInterval_mbe() {
+        Flowable.interval(1, TimeUnit.MILLISECONDS)
+                .flatMap {
+                    return@flatMap Flowable.just(it)
+                            .subscribeOn(Schedulers.io())
+                            .doOnNext { println("Thread = ${Thread.currentThread().name}") }
+                }
+                .subscribe({
+                    println("time: ${Date().time}, id = ${it}")
+                    Thread.sleep(1000)
+                })
+
+        Thread.sleep(15000)
+    }
+
+    @Test
+    fun testInterval_fixed() {
+        Flowable.interval(1, TimeUnit.MILLISECONDS)
+                .onBackpressureDrop()
+                .flatMap {
+                    return@flatMap Flowable.just(it)
+                            .subscribeOn(Schedulers.io())
+                            .doOnNext { println("Thread = ${Thread.currentThread().name}") }
+                }
+                .subscribe({
+                    println("time: ${Date().time}, id = ${it}")
+                    Thread.sleep(10)
                 })
 
         Thread.sleep(15000)

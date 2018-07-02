@@ -10,10 +10,8 @@ import org.junit.Test
 
 class `00_rxjava_flow_example` {
 
-    //TODO: разница между subscribeOn/observerOn
-
     /**
-     * У обзерваблов есть upstream и downstream
+     * У обзерваблов есть upstream и downstream.
      * Subscribe вызывает метод subscribeActual у вышестоящего оператора,
      * тот в свою очередь вызывает subscribeActual у другого вышестоящего и так до тех пор,
      * пока дело не дойдёт до так называемого ObservableSource (just в данном случае.

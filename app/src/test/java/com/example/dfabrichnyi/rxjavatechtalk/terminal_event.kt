@@ -14,11 +14,14 @@ class terminal_event {
     @Test
     fun test() {
         Observable.create<Int> { emitter -> emitter.onNext(1) }
-                .blockingSubscribe({ println("value = $it") }, { }, { println("complete") })
+                .subscribe({ println("value = $it") }, { }, { println("complete") })
+
+        Thread.sleep(7000)
     }
 
     /**
-     * В данном примере o2 никогда не начнёт эмитит ьсвои элементы
+     * В данном примере observable o2 никогда не начнёт эмитить свои элементы,
+     * потому что o1 никогда не завершится (concatMap ждёт onComplete чтобы перейти к следующему обзёрваблу)
      * */
     @Test
     fun test2() {
