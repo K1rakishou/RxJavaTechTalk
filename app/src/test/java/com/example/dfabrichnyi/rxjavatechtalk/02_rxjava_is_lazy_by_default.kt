@@ -1,7 +1,7 @@
 import io.reactivex.Observable
 import org.junit.Test
 
-class `01_rxjava_is_lazy_by_default` {
+class `02_rxjava_is_lazy_by_default` {
 
     /**
      * Реактивные стримы ленивы. Это означает, что можно создавать бесконечные стримы.

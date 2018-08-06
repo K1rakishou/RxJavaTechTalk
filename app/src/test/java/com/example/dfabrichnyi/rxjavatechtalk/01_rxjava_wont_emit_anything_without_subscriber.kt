@@ -1,7 +1,7 @@
 import io.reactivex.Observable
 import org.junit.Test
 
-class `00_rxjava_wont_emit_anything_without_subscriber` {
+class `01_rxjava_wont_emit_anything_without_subscriber` {
 
     /**
      * Реактивные стримы холодные по-умолчанию. Это означает,

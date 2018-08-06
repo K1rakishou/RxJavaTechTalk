@@ -7,17 +7,17 @@ import java.nio.ByteBuffer
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class `06_rxjava_backpressure` {
+class `09_rxjava_backpressure` {
 
     class Data(var id: Int,
-               var buffer: ByteBuffer = ByteBuffer.allocate(1024 * 1024)) //1MB
+               var buffer: ByteBuffer = ByteBuffer.allocate(1024 * 1024 * 3)) //3MB - чтобы быстрее словить ООМ
 
     /**
      * Backpressure - это механизм общения даунстрима и апстрима. У flowable есть собственный тип сабскрайбера -
      * FlowableSubscriber у которого есть параметр Subscription (в отличии от Disposable у других типов)
      * и у него есть метод request. Этот метод передаёт в апстрим количество элементов которое просит даунстрим.
      * Каждый оператор в flowable обрабатывает этот метод из-за этого backpressure работает для flowable
-     * по-умолчанию (в отличии от других типов)
+     * по-умолчанию (в отличии от других типов).
      * */
     @Test
     fun testOk() {
@@ -28,30 +28,6 @@ class `06_rxjava_backpressure` {
                     Thread.sleep(50)
                 }, { error -> error.printStackTrace() })
     }
-
-
-    /**
-     * По-умолчанию subscribe вызывает метод реквест с максимально возможным значением - Long.MAX_VALUE
-     * */
-    @Test
-    fun test123() {
-        Flowable.create<Int>({ emitter ->
-            for (i in 0..1_000_000_000) {
-                if (!emitter.isCancelled) {
-                    println("requested = ${emitter.requested()}")
-                    emitter.onNext(i)
-                }
-            }
-
-            emitter.onComplete()
-        }, BackpressureStrategy.MISSING)
-                .map { Data(it) }
-                .subscribe({
-                    println("id = ${it.id}")
-                    Thread.sleep(50)
-                }, { error -> error.printStackTrace() })
-    }
-
 
     /**
      * Отключим Backpressure и удивимся, что всё по прежнему работает.
@@ -133,7 +109,7 @@ class `06_rxjava_backpressure` {
      * */
     @Test
     fun testInterval() {
-        Flowable.interval(10, TimeUnit.MILLISECONDS)
+        Flowable.interval(10, TimeUnit.MILLISECONDS, Schedulers.computation())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     println("time: ${Date().time}, id = ${it}")
@@ -143,6 +119,10 @@ class `06_rxjava_backpressure` {
         Thread.sleep(15000)
     }
 
+    /**
+     * Однако, backpressure не может работать, когда у стрима есть вложенный стрим который выполняется
+     * на другом шедулере
+     * */
     @Test
     fun testInterval_mbe() {
         Flowable.interval(1, TimeUnit.MILLISECONDS)
@@ -159,6 +139,9 @@ class `06_rxjava_backpressure` {
         Thread.sleep(15000)
     }
 
+    /**
+     * Чтобы это починить, можно воспользоваться операторами onBackpressure***
+     * */
     @Test
     fun testInterval_fixed() {
         Flowable.interval(1, TimeUnit.MILLISECONDS)
