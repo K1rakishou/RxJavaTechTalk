@@ -1,18 +1,14 @@
-package com.example.dfabrichnyi.rxjavatechtalk
-
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.withLatestFrom
+import io.reactivex.rxkotlin.zipWith
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
 class `12_reactive_streams_combining` {
 
-    //TODO: zip with connectable observable
-    //TODO: zip with behaviour subject
-
     /**
-     * Оператор zip комбинирует ивенты из разных апстримов в один ивент и пускает его дальше вниз.
+     * Оператор zip комбинирует ивенты из разных апстримов в один ивент и пускает его дальше вниз по стриму.
      * Оператоп zip завершает свою работу как только один из стримов присылает терминальный ивент (complete/error).
      * Если один из стримов медленнее другого - оператор zip будет буферизировать все ивенты из
      * более быстрого стрима (потенциальные ООМ).
@@ -58,6 +54,23 @@ class `12_reactive_streams_combining` {
 
         Thread.sleep(10000)
     }
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

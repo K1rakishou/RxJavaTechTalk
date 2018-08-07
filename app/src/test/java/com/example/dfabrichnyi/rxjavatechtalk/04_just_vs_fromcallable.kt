@@ -1,6 +1,5 @@
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
 
@@ -16,7 +15,7 @@ class `04_just_vs_fromcallable` {
         println("current thread name = $currentThreadName")
         assertNotEquals("Cannot be executed on the main thread!", "main", currentThreadName)
 
-        //симуляция какой-либо долгой операции (запрос в сеть)
+        //симуляция какой-либо долгой операции
         Thread.sleep(500)
         return "done"
     }
@@ -70,8 +69,8 @@ class `04_just_vs_fromcallable` {
 
     /**
      * Для того чтобы попасть из императивного мира в реактивный многие использую оператор just
-     * передавая в него функцию и не понимая, что этот оператор принимает КОНСТАНТУ, а не функцию.
-     * Это означает, что в данном случае longRunningOperation будет выполнена в основном потоке и
+     * передавая в него функцию и не понимая, что этот оператор принимает КОНСТАНТУ, т.е. готовый результат,
+     * а не функцию. Это означает, что в данном случае longRunningOperation будет выполнена в основном потоке и
      * только ПОСЛЕ ЭТОГО результат будет передан оператору just
      * */
     @Test
@@ -79,7 +78,7 @@ class `04_just_vs_fromcallable` {
         Observable.just(longRunningOperation())
                 .subscribeOn(Schedulers.io())
                 .subscribe({ result ->
-                    println("result = $result")
+                    println(result)
                 }, { error ->
                     error.printStackTrace()
                 })

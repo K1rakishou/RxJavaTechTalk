@@ -1,5 +1,3 @@
-package com.example.dfabrichnyi.rxjavatechtalk.`0_info`
-
 import io.reactivex.Observable
 import org.junit.Test
 import java.util.concurrent.TimeUnit
@@ -8,10 +6,11 @@ import java.util.concurrent.atomic.AtomicInteger
 class `07_share` {
 
     /**
-     * Оператор share решает проблему мультикастинга обзервабла нескольким сабскрайберам
+     * Оператор share решает проблему мультикастинга обзервабла нескольким сабскрайберам.
+     * Допустим, нам надо рассылать обзёрвабл нескольким сабскрайберам. По-умолчанию такое невозможно.
      * */
     @Test
-    fun test1() {
+    fun test_problem() {
         val index = AtomicInteger(0)
         val timer = Observable.interval(500, TimeUnit.MILLISECONDS)
                 .map { index.getAndIncrement() }
@@ -67,9 +66,11 @@ class `07_share` {
 
 
 
-
+    /**
+     * Оператор share решает данную проблему
+     * */
     @Test
-    fun test2() {
+    fun test_solution() {
         val index = AtomicInteger(0)
         val timer = Observable.interval(200, TimeUnit.MILLISECONDS)
                 .map { index.getAndIncrement() }

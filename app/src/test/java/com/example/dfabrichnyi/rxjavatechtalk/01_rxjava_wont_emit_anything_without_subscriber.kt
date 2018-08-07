@@ -4,7 +4,7 @@ import org.junit.Test
 class `01_rxjava_wont_emit_anything_without_subscriber` {
 
     /**
-     * Реактивные стримы холодные по-умолчанию. Это означает,
+     * Реактивные стримы по-умолчанию холодные. Это означает,
      * что стрим не будет ничего эмитить, если у него нет подписчиков
      * */
     @Test
@@ -61,7 +61,7 @@ class `01_rxjava_wont_emit_anything_without_subscriber` {
 
 
     /**
-     * Исключение составляет ConnectableObservable
+     * Исключение составляют "горячие" стримы, которые можно сделать через, например, ConnectableObservable
      * */
     @Test
     fun test_hot() {

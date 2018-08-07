@@ -10,7 +10,8 @@ import java.util.concurrent.TimeUnit
 class `09_rxjava_backpressure` {
 
     class Data(var id: Int,
-               var buffer: ByteBuffer = ByteBuffer.allocate(1024 * 1024 * 3)) //3MB - чтобы быстрее словить ООМ
+               //5MB - чтобы быстрее словить ООМ
+               var buffer: ByteBuffer = ByteBuffer.allocate(1024 * 1024 * 5))
 
     /**
      * Backpressure - это механизм общения даунстрима и апстрима. У flowable есть собственный тип сабскрайбера -
@@ -104,8 +105,8 @@ class `09_rxjava_backpressure` {
 
 
     /**
-     * Ещё один пример того, что backpressure есть во-всех операторах flowable
-     * Вопрос - как часто будет вызываться метод subscribe?
+     * Ещё один пример того, что backpressure есть во всех операторах flowable
+     * Вопрос - как часто будет вызываться код в subscribe?
      * */
     @Test
     fun testInterval() {
@@ -120,7 +121,7 @@ class `09_rxjava_backpressure` {
     }
 
     /**
-     * Однако, backpressure не может работать, когда у стрима есть вложенный стрим который выполняется
+     * Однако, backpressure не работает, когда у стрима есть вложенный стрим который выполняется
      * на другом шедулере
      * */
     @Test

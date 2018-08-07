@@ -1,5 +1,3 @@
-package com.example.dfabrichnyi.rxjavatechtalk
-
 import io.reactivex.Observable
 import io.reactivex.Single
 import org.junit.Test
@@ -65,4 +63,64 @@ class `15_empty_vs_never` {
                 .defaultIfEmpty(-12)
                 .subscribe({ println("value = $it") })
     }
+
+
+    /**
+     * Что будет выведено?
+     * */
+    @Test
+    fun test5() {
+        Observable.just(1)
+                .filter { false }
+                .defaultIfEmpty(-12)
+                .subscribe({ println("value = $it") })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * defaultIfEmpty заэмитит элемент только в том случае, если через него прошёл только onComplete
+     * (без onNext)
+     * */
 }

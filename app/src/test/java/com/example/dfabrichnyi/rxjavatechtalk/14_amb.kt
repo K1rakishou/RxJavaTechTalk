@@ -1,5 +1,3 @@
-package com.example.dfabrichnyi.rxjavatechtalk
-
 import io.reactivex.Observable
 import org.junit.Test
 import java.util.concurrent.TimeUnit

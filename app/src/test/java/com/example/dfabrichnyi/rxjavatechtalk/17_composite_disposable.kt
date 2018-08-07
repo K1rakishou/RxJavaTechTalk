@@ -1,5 +1,3 @@
-package com.example.dfabrichnyi.rxjavatechtalk
-
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -10,18 +8,18 @@ import java.util.concurrent.TimeUnit
 class `17_composite_disposable` {
 
     /**
-     * Clear очищает список disposable и отписывается от каждого,
+     * Clear отписывается от каждого сохранённого disposable и очищает свой внутренний список,
      * если после этого добавить новый disposable, то он будет работать
      *
-     * Dispose очищает список disposable и отписывается от каждого,
+     * Dispose отписывается от каждого сохранённого disposable и очищает свой внутренний список,
      * если после этого добавить новый disposable (через add()), CompositeDisposable его не только не добавит,
-     * но так же отпишется от него
+     * но и тут же отпишется от него
      * */
     @Test
     fun test() {
         val cd = CompositeDisposable()
 
-        val d1 = Observable.just(1, 2, 3)
+        val d1 = Observable.just(Unit)
                 .zipWith(Observable.timer(100, TimeUnit.MILLISECONDS))
                 .subscribe()
         cd += d1
@@ -30,7 +28,7 @@ class `17_composite_disposable` {
         cd.clear()
         println("d1 isDisposed = ${d1.isDisposed}")
 
-        val d2 = Observable.just(1, 2, 3)
+        val d2 = Observable.just(Unit)
                 .zipWith(Observable.timer(100, TimeUnit.MILLISECONDS))
                 .subscribe()
         cd += d2
@@ -39,7 +37,7 @@ class `17_composite_disposable` {
         cd.dispose()
         println("d2 isDisposed = ${d2.isDisposed}")
 
-        val d3 = Observable.just(1, 2, 3)
+        val d3 = Observable.just(Unit)
                 .zipWith(Observable.timer(100, TimeUnit.MILLISECONDS))
                 .subscribe()
 

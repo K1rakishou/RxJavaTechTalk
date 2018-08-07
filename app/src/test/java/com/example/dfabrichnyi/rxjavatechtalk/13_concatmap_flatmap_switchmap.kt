@@ -1,5 +1,3 @@
-package com.example.dfabrichnyi.rxjavatechtalk
-
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.zipWith
 import io.reactivex.schedulers.Schedulers
@@ -11,6 +9,9 @@ class `13_concatmap_flatmap_switchmap` {
 
     private val random = Random()
 
+    /**
+     * Меняем порядок элементов на рандомный
+     * */
     fun longOperation(value: Int): Observable<Int> {
         return Observable.just(value)
                 .subscribeOn(Schedulers.io())

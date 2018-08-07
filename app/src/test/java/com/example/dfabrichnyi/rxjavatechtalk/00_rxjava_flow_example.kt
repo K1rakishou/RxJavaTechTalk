@@ -1,5 +1,3 @@
-package com.example.dfabrichnyi.rxjavatechtalk
-
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.Observer
@@ -17,8 +15,9 @@ class `00_rxjava_flow_example` {
      * пока дело не дойдёт до так называемого ObservableSource (just в данном случае.
      * Другие примеры сорсов - fromCallable, fromIterable, и тд)
      *
-     * Далее ObservableSource вызывает onSubscribe у нижестоящего оператора (циклично до конца) (создавая и передавая диспосабл)
-     * и затем передаёт значение через onNext и терминальный ивент через onComplete
+     * Далее ObservableSource вызывает onSubscribe у нижестоящего оператора (циклично до конца)
+     * (создавая и передавая диспосабл) и затем передаёт значение через onNext и терминальный
+     * ивент через onComplete
      *
      * */
     @Test
