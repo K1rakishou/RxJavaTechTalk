@@ -18,7 +18,6 @@ class `00_rxjava_flow_example` {
      * Далее ObservableSource вызывает onSubscribe у нижестоящего оператора (циклично до конца)
      * (создавая и передавая диспосабл) и затем передаёт значение через onNext и терминальный
      * ивент через onComplete
-     *
      * */
     @Test
     fun test() {
