@@ -15,7 +15,7 @@ class `13_concatmap_flatmap_switchmap` {
     fun longOperation(value: Int): Observable<Int> {
         return Observable.just(value)
                 .subscribeOn(Schedulers.io())
-                .zipWith(Observable.timer(random.nextInt(100).toLong(), TimeUnit.MILLISECONDS))
+                .zipWith(Observable.timer(Math.abs(random.nextInt(100)).toLong(), TimeUnit.MILLISECONDS))
                 .map { it.first }
                 .doOnNext { println(Thread.currentThread().name) }
     }
@@ -78,7 +78,11 @@ class `13_concatmap_flatmap_switchmap` {
     @Test
     fun test4() {
         Observable.just(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-                .switchMap { longOperation (it) }
+                .switchMap {
+                    return@switchMap longOperation(it)
+                            .doOnSubscribe { println("subscribe") }
+                            .doOnDispose { println("dispose") }
+                }
                 .subscribe({ println("value = $it") })
 
         Thread.sleep(1500)

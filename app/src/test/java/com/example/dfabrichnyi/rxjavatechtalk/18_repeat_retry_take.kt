@@ -3,18 +3,23 @@ package com.example.dfabrichnyi.rxjavatechtalk
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.zipWith
 import org.junit.Test
+import java.util.*
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 class `18_repeat_retry_take` {
 
     /**
-     * Оператор repeat переподписывается на стрим при получении терминального ивента onComplete
+     * Оператор repeat пропускает вниз по стриму всё что было в стриме и переподписывается на стрим
+     * при получении терминального ивента onComplete
      * */
     @Test
     fun test1() {
         Observable.just(1)
+                .doOnSubscribe { println("subscribe") }
+                .doOnComplete { println("complete") }
                 .repeat(5)
                 .subscribe({ println("value = $it") })
     }
@@ -83,7 +88,8 @@ class `18_repeat_retry_take` {
                     return@concatMap Observable.just(it)
                             .delay(1, TimeUnit.SECONDS)
                             .doOnNext {
-                                print("Attempt to download a file #${attemptNumber.incrementAndGet()}...")
+                                print("Attempt to download a file " +
+                                        "#${attemptNumber.incrementAndGet()}...")
 
                                 if (attemptNumber.get() < 5) {
                                     println("ERROR")
@@ -98,6 +104,15 @@ class `18_repeat_retry_take` {
 
         Thread.sleep(6000)
     }
+
+
+
+
+
+
+
+
+
 
 
 

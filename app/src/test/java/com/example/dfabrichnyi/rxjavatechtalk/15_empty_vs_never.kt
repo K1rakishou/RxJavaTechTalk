@@ -5,7 +5,8 @@ import org.junit.Test
 class `15_empty_vs_never` {
 
     /**
-     * Observable.empty возвращает обзервабл который не эмитит никаких элементов, но вызывает onComplete
+     * Observable.empty возвращает обзервабл который не эмитит никаких элементов,
+     * но вызывает onComplete
      * */
     @Test
     fun test1() {
@@ -21,7 +22,8 @@ class `15_empty_vs_never` {
     }
 
     /**
-     * Observable.never возвращает обзервабл который не эмитит никаких элементов, и не вызывает onComplete
+     * Observable.never возвращает обзервабл который не эмитит никаких элементов,
+     * и не вызывает onComplete
      * */
     @Test
     fun test2() {
@@ -120,7 +122,7 @@ class `15_empty_vs_never` {
 
 
     /**
-     * defaultIfEmpty заэмитит элемент только в том случае, если через него прошёл только onComplete
-     * (без onNext)
+     * defaultIfEmpty заэмитит элемент только в том случае, если через него прошёл только
+     * ивент onComplete (без onNext). Только в таком случае стрим будет считаться пустым
      * */
 }

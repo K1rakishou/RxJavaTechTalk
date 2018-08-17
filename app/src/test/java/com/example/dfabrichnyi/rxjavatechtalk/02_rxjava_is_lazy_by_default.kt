@@ -19,14 +19,14 @@ class `02_rxjava_is_lazy_by_default` {
     }
 
     /**
-     * Например пользователь тыкает кнопку и мы хотим с каждым кликом инвертировать некий булевый стейт
+     * Например пользователь тыкает кнопку и мы хотим с каждым кликом менять циклично некий стейт
      * */
     @Test
     fun test2() {
-        val stateObservable = Observable.just(true, false)
+        val stateObservable = Observable.just(4, 3, 1, 2)
                 .repeat()
 
-        Observable.range(0, 10) //10 кликов
+        Observable.range(0, 16) //16 кликов
                 .zipWith(stateObservable)
                 .subscribe({ println("click #${it.first}, current state = ${it.second}") })
     }

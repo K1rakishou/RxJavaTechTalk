@@ -3,7 +3,7 @@ import org.junit.Test
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
-class `07_share` {
+class `07_sharing_is_caring` {
 
     /**
      * Оператор share решает проблему мультикастинга обзервабла нескольким сабскрайберам.

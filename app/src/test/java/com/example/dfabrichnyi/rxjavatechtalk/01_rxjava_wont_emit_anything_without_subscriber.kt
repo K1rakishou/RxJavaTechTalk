@@ -61,7 +61,8 @@ class `01_rxjava_wont_emit_anything_without_subscriber` {
 
 
     /**
-     * Исключение составляют "горячие" стримы, которые можно сделать через, например, ConnectableObservable
+     * Исключение составляют "горячие" стримы, которые можно сделать через, например,
+     * ConnectableObservable
      * */
     @Test
     fun test_hot() {

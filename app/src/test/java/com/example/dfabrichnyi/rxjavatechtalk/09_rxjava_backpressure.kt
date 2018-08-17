@@ -14,11 +14,12 @@ class `09_rxjava_backpressure` {
                var buffer: ByteBuffer = ByteBuffer.allocate(1024 * 1024 * 5))
 
     /**
-     * Backpressure - это механизм общения даунстрима и апстрима. У flowable есть собственный тип сабскрайбера -
-     * FlowableSubscriber у которого есть параметр Subscription (в отличии от Disposable у других типов)
-     * и у него есть метод request. Этот метод передаёт в апстрим количество элементов которое просит даунстрим.
-     * Каждый оператор в flowable обрабатывает этот метод из-за этого backpressure работает для flowable
-     * по-умолчанию (в отличии от других типов).
+     * Backpressure - это механизм общения даунстрима и апстрима. У flowable есть собственный
+     * тип сабскрайбера - FlowableSubscriber у которого есть параметр Subscription
+     * (в отличии от Disposable у других типов) и у него есть метод request. Этот метод передаёт в
+     * апстрим количество элементов которое готов обработать даунстрим. Каждый оператор в flowable
+     * обрабатывает этот метод и из-за этого backpressure работает для flowable по-умолчанию
+     * (в отличии от других типов).
      * */
     @Test
     fun testOk() {
@@ -137,7 +138,7 @@ class `09_rxjava_backpressure` {
                     Thread.sleep(1000)
                 })
 
-        Thread.sleep(15000)
+        Thread.sleep(5000)
     }
 
     /**
@@ -157,6 +158,6 @@ class `09_rxjava_backpressure` {
                     Thread.sleep(10)
                 })
 
-        Thread.sleep(15000)
+        Thread.sleep(5000)
     }
 }

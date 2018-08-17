@@ -16,7 +16,7 @@ class `00_rxjava_flow_example` {
      * Другие примеры сорсов - fromCallable, fromIterable, и тд)
      *
      * Далее ObservableSource вызывает onSubscribe у нижестоящего оператора (циклично до конца)
-     * (создавая и передавая диспосабл) и затем передаёт значение через onNext и терминальный
+     * (передавая диспосабл) и затем передаёт значение через onNext и терминальный
      * ивент через onComplete
      * */
     @Test
@@ -26,16 +26,6 @@ class `00_rxjava_flow_example` {
                 .testOperator("operator2")
                 .testOperator("operator3")
                 .subscribe()
-    }
-
-    @Test
-    fun test2() {
-        Observable.just(1)
-                .testOperator("operator1")
-                .testOperator("operator2")
-                .doOnNext { throw IllegalStateException("123") }
-                .testOperator("operator3")
-                .subscribe({}, {})
     }
 
     private fun <T> Observable<T>.testOperator(tag: String): Observable<T> {

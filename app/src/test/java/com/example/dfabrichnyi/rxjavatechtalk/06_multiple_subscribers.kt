@@ -9,19 +9,19 @@ class `06_multiple_subscribers` {
      * */
     @Test
     fun test1() {
-        val longOperationObservable = Observable.fromCallable {
-            println("Doing some heavy work")
+        val blockingOperationObservable = Observable.fromCallable {
+            println("Some blocking operation")
 
             Thread.sleep(500)
         }
 
-        longOperationObservable
+        blockingOperationObservable
                 .subscribe()
 
-        longOperationObservable
+        blockingOperationObservable
                 .subscribe()
 
-        longOperationObservable
+        blockingOperationObservable
                 .subscribe()
 
         Thread.sleep(2000)
@@ -78,20 +78,20 @@ class `06_multiple_subscribers` {
      * */
     @Test
     fun test1_2() {
-        val longOperationObservable = Observable.fromCallable {
-            println("Doing some heavy work")
+        val blockingOperationObservable = Observable.fromCallable {
+            println("Some blocking operation")
 
             Thread.sleep(500)
             "done"
         }.share()
 
-        longOperationObservable
+        blockingOperationObservable
                 .subscribe({ value -> println(value) })
 
-        longOperationObservable
+        blockingOperationObservable
                 .subscribe({ value -> println(value) })
 
-        longOperationObservable
+        blockingOperationObservable
                 .subscribe({ value -> println(value) })
 
         Thread.sleep(2000)
@@ -146,27 +146,27 @@ class `06_multiple_subscribers` {
 
     /**
      * Избежать этого можно заюзав оператор cache. Внутри, оператор cache использует LinkedList,
-     * куда будут сохраняться любые значения которые через него проходят (и его нельзя очистить!!!),
-     * тем самым он может стать причиной ООМ. Cache не подходит в тех случаях, когда нужно кешировать всего
-     * одно значение, потому что cache кеширует вообще всё (особенно опасно юзать cache в сочетании с
-     * бесконечными стримами (subjects)).
+     * куда будут сохраняться любые значения которые через него проходят (и его нельзя очистить!!!,
+     * только если отпиской), тем самым он может стать причиной ООМ. Cache не подходит в тех случаях,
+     * когда нужно кешировать всего одно значение, потому что cache кеширует вообще всё
+     * (особенно опасно юзать cache в сочетании с бесконечными стримами (subjects)).
      * */
     @Test
     fun test2() {
-        val longOperationObservable = Observable.fromCallable {
-            println("Doing some heavy work")
+        val blockingOperationObservable = Observable.fromCallable {
+            println("Some blocking operation")
 
             Thread.sleep(500)
             "done"
         }.cache()
 
-        longOperationObservable
+        blockingOperationObservable
                 .subscribe({ value -> println(value) })
 
-        longOperationObservable
+        blockingOperationObservable
                 .subscribe({ value -> println(value) })
 
-        longOperationObservable
+        blockingOperationObservable
                 .subscribe({ value -> println(value) })
 
         Thread.sleep(700)
@@ -216,29 +216,115 @@ class `06_multiple_subscribers` {
 
     /**
      * Так же можно заюзать оператор replay с размером буфера равным единице.
-     * Replay будет перезаписывать закешированное значение, что позволяет нам избежать ООМ в отличии от cache
+     * Replay будет перезаписывать закешированное значение, что позволяет нам избежать
+     * ООМ в отличии от cache.
+     *
+     * А ещё можно заюзать cacheLast из либы RxJava Extensions
      * */
     @Test
     fun test3() {
-        val longOperationObservable = Observable.fromCallable {
-            println("Doing some heavy work")
+        val blockingOperationObservable = Observable.fromCallable {
+            println("Some blocking operation")
 
             Thread.sleep(500)
             "done"
         }.replay(1).autoConnect(3)
 
-        longOperationObservable
+        blockingOperationObservable
                 .subscribe({ value -> println(value) })
 
-        longOperationObservable
+        blockingOperationObservable
                 .subscribe({ value -> println(value) })
 
-        longOperationObservable
+        blockingOperationObservable
+                .subscribe({ value -> println(value) })
+
+        Thread.sleep(700)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Так же можно заюзать publish/connect для создания горячего обзёрвабла который потом можно
+     * мультикастнуть в несколько сабскрайберов
+     * */
+    @Test
+    fun test4() {
+        val blockingOperationObservable = Observable.fromCallable {
+            println("Some blocking operation")
+
+            Thread.sleep(500)
+            "done"
+        }.publish().autoConnect(3)
+
+        blockingOperationObservable
+                .subscribe({ value -> println(value) })
+
+        blockingOperationObservable
+                .subscribe({ value -> println(value) })
+
+        blockingOperationObservable
                 .subscribe({ value -> println(value) })
 
         Thread.sleep(700)
     }
 }
+
+
+
+
+
+
+
+
 
 
 
