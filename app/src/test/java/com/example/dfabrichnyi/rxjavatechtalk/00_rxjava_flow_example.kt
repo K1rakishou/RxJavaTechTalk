@@ -2,9 +2,9 @@ import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
-import io.reactivex.internal.fuseable.HasUpstreamObservableSource
 import io.reactivex.plugins.RxJavaPlugins
 import org.junit.Test
+import java.util.concurrent.atomic.AtomicBoolean
 
 class `00_rxjava_flow_example` {
 
@@ -35,9 +35,7 @@ class `00_rxjava_flow_example` {
     class TestOperator<T>(
             private val source: ObservableSource<T>,
             private val tag: String
-    ) : Observable<T>(), HasUpstreamObservableSource<T> {
-
-        override fun source(): ObservableSource<T> = source
+    ) : Observable<T>() {
 
         override fun subscribeActual(observer: Observer<in T>) {
             println("$tag: subscribeActual")
@@ -47,10 +45,8 @@ class `00_rxjava_flow_example` {
         class TestOperatorObserver<T>(
                 private val actual: Observer<in T>,
                 private val tag: String
-        ) : Observer<T>, Disposable {
-
-            var done: Boolean = false
-            var disposable: Disposable? = null
+        ) : Observer<T>, Disposable, AtomicBoolean(false) {
+            private var disposable: Disposable? = null
 
             override fun onSubscribe(disposable: Disposable) {
                 this.disposable = disposable
@@ -59,15 +55,14 @@ class `00_rxjava_flow_example` {
             }
 
             override fun onNext(element: T) {
-                if (!done) {
+                if (!this.get()) {
                     println("$tag: onNext")
                     actual.onNext(element)
                 }
             }
 
             override fun onError(error: Throwable) {
-                if (!done) {
-                    done = true
+                if (this.compareAndSet(false, true)) {
                     println("$tag: onError")
                     actual.onError(error)
                 } else {
@@ -76,8 +71,7 @@ class `00_rxjava_flow_example` {
             }
 
             override fun onComplete() {
-                if (!done) {
-                    done = true
+                if (this.compareAndSet(false, true)) {
                     println("$tag: onComplete")
                     actual.onComplete()
                 }

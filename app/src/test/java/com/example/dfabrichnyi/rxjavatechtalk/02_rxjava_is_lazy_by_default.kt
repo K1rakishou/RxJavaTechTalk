@@ -18,6 +18,62 @@ class `02_rxjava_is_lazy_by_default` {
                 .subscribe({ value -> println("value = $value") })
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Например пользователь тыкает кнопку и мы хотим с каждым кликом менять циклично некий стейт
      * */
@@ -26,7 +82,7 @@ class `02_rxjava_is_lazy_by_default` {
         val stateObservable = Observable.just(4, 3, 1, 2)
                 .repeat()
 
-        Observable.range(0, 16) //16 кликов
+        Observable.range(0, 16)
                 .zipWith(stateObservable)
                 .subscribe({ println("click #${it.first}, current state = ${it.second}") })
     }

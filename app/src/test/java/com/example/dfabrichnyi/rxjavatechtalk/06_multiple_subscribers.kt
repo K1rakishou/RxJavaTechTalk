@@ -1,11 +1,12 @@
 import io.reactivex.Observable
 import org.junit.Test
+import java.util.concurrent.TimeUnit
 
 class `06_multiple_subscribers` {
 
     /**
      * У обзёрвабла может быть несколько сабскрайберов. Но тут есть подводный камень.
-     * Сколько раз будет выполнен код внутри лямбды?
+     * Сколько раз будет выполнен код внутри fromCallable?
      * */
     @Test
     fun test1() {
@@ -13,16 +14,17 @@ class `06_multiple_subscribers` {
             println("Some blocking operation")
 
             Thread.sleep(500)
+            "done"
         }
 
         blockingOperationObservable
-                .subscribe()
+                .subscribe({ value -> println(value) })
 
         blockingOperationObservable
-                .subscribe()
+                .subscribe({ value -> println(value) })
 
         blockingOperationObservable
-                .subscribe()
+                .subscribe({ value -> println(value) })
 
         Thread.sleep(2000)
     }
@@ -74,7 +76,7 @@ class `06_multiple_subscribers` {
 
 
     /**
-     * Многие ошибочно считают, что для решения этой проблемы существует оператор share, но это не так
+     * Многие ошибочно считают, что для решения этой проблемы существует оператор share
      * */
     @Test
     fun test1_2() {
@@ -219,7 +221,7 @@ class `06_multiple_subscribers` {
      * Replay будет перезаписывать закешированное значение, что позволяет нам избежать
      * ООМ в отличии от cache.
      *
-     * А ещё можно заюзать cacheLast из либы RxJava Extensions
+     * Или заюзать cacheLast из либы RxJava Extensions
      * */
     @Test
     fun test3() {
@@ -244,13 +246,39 @@ class `06_multiple_subscribers` {
 
 
 
+    /**
+     * А можно вообще задать 0 в параметр метода autoConnect и это будет означать, что обзёрвабл
+     * сохранит последнее значение, даже если нет подписчиков, вместо того, чтобы закрыть стрим.
+     * */
+    @Test
+    fun test3_1() {
+        val blockingOperationObservable = Observable.fromCallable {
+            println("Some blocking operation")
 
+            Thread.sleep(500)
+            "done"
+        }.replay(1).autoConnect(0)
 
+        blockingOperationObservable
+                .subscribe({ value -> println(value) })
 
+        blockingOperationObservable
+                .subscribe({ value -> println(value) })
 
+        blockingOperationObservable
+                .subscribe({ value -> println(value) })
 
+        blockingOperationObservable
+                .subscribe({ value -> println(value) })
 
+        blockingOperationObservable
+                .subscribe({ value -> println(value) })
 
+        blockingOperationObservable
+                .subscribe({ value -> println(value) })
+
+        Thread.sleep(700)
+    }
 
 
 
