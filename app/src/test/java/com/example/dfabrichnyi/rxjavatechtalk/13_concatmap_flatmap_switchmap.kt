@@ -10,9 +10,9 @@ class `13_concatmap_flatmap_switchmap` {
     private val random = Random()
 
     /**
-     * Меняем порядок элементов на рандомный
+     * Меняет порядок элементов на рандомный
      * */
-    fun longOperation(value: Int): Observable<Int> {
+    private fun longOperation(value: Int): Observable<Int> {
         return Observable.just(value)
                 .subscribeOn(Schedulers.io())
                 .zipWith(Observable.timer(Math.abs(random.nextInt(100)).toLong(), TimeUnit.MILLISECONDS))
