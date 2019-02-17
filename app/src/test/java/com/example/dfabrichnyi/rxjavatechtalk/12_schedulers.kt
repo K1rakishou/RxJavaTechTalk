@@ -2,7 +2,7 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import org.junit.Test
 
-class `11_schedulers` {
+class `12_schedulers` {
 
     /**
      * Разница между subscribeOn и observerOn.

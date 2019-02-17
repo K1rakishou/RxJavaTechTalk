@@ -92,18 +92,14 @@ class why {
       Thread.sleep(5000)
       println("Lifecycle.Resumed")
       lifecycleState.onNext(Lifecycle.Resumed)
+
+      Thread.sleep(5000)
+      println("Lifecycle.Paused")
+      lifecycleState.onNext(Lifecycle.Paused)
     }
 
     thread {
       Thread.sleep(2000)
-      println("PermissionState.Granted")
-      permissionsState.onNext(PermissionState.Granted(listOf("camera", "gps")))
-
-      Thread.sleep(8000)
-      println("PermissionState.Denied")
-      permissionsState.onNext(PermissionState.Denied(listOf("gps")))
-
-      Thread.sleep(1000)
       println("PermissionState.Granted")
       permissionsState.onNext(PermissionState.Granted(listOf("camera", "gps")))
     }

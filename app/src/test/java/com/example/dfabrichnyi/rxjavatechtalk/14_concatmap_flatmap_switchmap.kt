@@ -5,7 +5,7 @@ import org.junit.Test
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class `13_concatmap_flatmap_switchmap` {
+class `14_concatmap_flatmap_switchmap` {
 
     private val random = Random()
 

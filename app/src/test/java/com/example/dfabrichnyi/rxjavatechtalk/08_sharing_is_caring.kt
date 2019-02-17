@@ -3,7 +3,7 @@ import org.junit.Test
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 
-class `07_sharing_is_caring` {
+class `08_sharing_is_caring` {
 
     /**
      * Зачем же тогда нужен оператор share() ?

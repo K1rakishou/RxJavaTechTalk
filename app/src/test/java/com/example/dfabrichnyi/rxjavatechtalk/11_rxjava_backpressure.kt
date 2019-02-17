@@ -7,7 +7,7 @@ import java.nio.ByteBuffer
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class `09_rxjava_backpressure` {
+class `11_rxjava_backpressure` {
 
     class Data(var id: Int,
                //5MB - чтобы быстрее словить ООМ

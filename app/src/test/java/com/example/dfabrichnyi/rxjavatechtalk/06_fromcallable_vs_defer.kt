@@ -1,7 +1,7 @@
 import io.reactivex.Observable
 import org.junit.Test
 
-class `05_fromcallable_vs_defer` {
+class `06_fromcallable_vs_defer` {
 
     /**
      * Помимо fromCallable существует оператор defer.

@@ -6,7 +6,7 @@ import io.reactivex.plugins.RxJavaPlugins
 import org.junit.Test
 import java.util.concurrent.atomic.AtomicBoolean
 
-class `00_rxjava_flow_example` {
+class `01_rxjava_flow_example` {
 
     /**
      * У обзерваблов есть upstream и downstream.

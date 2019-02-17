@@ -5,7 +5,7 @@ import io.reactivex.rxkotlin.zipWith
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
-class `12_reactive_streams_combining` {
+class `13_reactive_streams_combining` {
 
     /**
      * Оператор zip комбинирует ивенты из разных апстримов в один ивент и пускает его дальше

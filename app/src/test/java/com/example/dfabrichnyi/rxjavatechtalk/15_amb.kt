@@ -4,7 +4,7 @@ import org.junit.Test
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class `14_amb` {
+class `15_amb` {
 
     /**
      * Эмитит все элементы того обзервабла, который первым эмитит элемент

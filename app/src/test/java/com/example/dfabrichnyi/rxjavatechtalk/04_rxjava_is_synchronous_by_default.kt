@@ -3,7 +3,7 @@ import io.reactivex.rxkotlin.zipWith
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
-class `03_rxjava_is_synchronous_by_default` {
+class `04_rxjava_is_synchronous_by_default` {
 
     /**
      * Реактивные стримы по-умолчанию синхронны. Это означает, что все работает в том потоке

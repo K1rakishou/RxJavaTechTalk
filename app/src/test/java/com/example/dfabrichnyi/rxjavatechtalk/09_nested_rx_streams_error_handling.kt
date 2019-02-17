@@ -1,7 +1,7 @@
 import io.reactivex.Observable
 import org.junit.Test
 
-class `08_1_nested_rx_streams_error_handling` {
+class `09_nested_rx_streams_error_handling` {
 
     /**
      * Зачем создавать один реактивный стрим внутри другого?

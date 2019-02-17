@@ -3,7 +3,7 @@ import io.reactivex.schedulers.Schedulers
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
 
-class `04_just_vs_fromcallable` {
+class `05_just_vs_fromcallable` {
 
     /**
      * Предположим, что у нас есть какая-то синхронная функция, которую мы хотим завернуть в

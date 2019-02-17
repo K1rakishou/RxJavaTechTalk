@@ -2,7 +2,7 @@ import io.reactivex.Observable
 import io.reactivex.rxkotlin.zipWith
 import org.junit.Test
 
-class `02_rxjava_is_lazy_by_default` {
+class `03_rxjava_is_lazy_by_default` {
 
     /**
      * Реактивные стримы по-умолчанию ленивы. Это означает, что мы можем создавать

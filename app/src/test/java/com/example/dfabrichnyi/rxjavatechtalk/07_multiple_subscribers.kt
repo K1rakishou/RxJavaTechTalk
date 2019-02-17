@@ -2,7 +2,7 @@ import io.reactivex.Observable
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
-class `06_multiple_subscribers` {
+class `07_multiple_subscribers` {
 
     /**
      * У обзёрвабла может быть несколько сабскрайберов. Но тут есть подводный камень.

@@ -5,7 +5,7 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import org.junit.Test
 
-class `08_2_nested_rx_streams_concurrency` {
+class `10_nested_rx_streams_concurrency` {
 
     /**
      * Ещё один пример для использования вложенных стримов - concurrency.
