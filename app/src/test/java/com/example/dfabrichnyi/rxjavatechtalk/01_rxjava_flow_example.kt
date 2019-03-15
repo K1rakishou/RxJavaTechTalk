@@ -9,7 +9,8 @@ import java.util.concurrent.atomic.AtomicBoolean
 class `01_rxjava_flow_example` {
 
     /**
-     * У обзерваблов есть upstream и downstream.
+     * У обзерваблов есть upstream и downstream. Сабскарйбинг происходит снизу вверх, а ивенты идут
+     * сверху вниз.
      * Subscribe вызывает метод subscribeActual у вышестоящего оператора,
      * тот в свою очередь вызывает subscribeActual у другого вышестоящего и так до тех пор,
      * пока дело не дойдёт до так называемого ObservableSource (just в данном случае.

@@ -170,7 +170,7 @@ class `19_repeat_retry_take` {
                 .subscribe({ flag.set(true) })
 
         Observable.just(0)
-                .zipWith(Observable.timer(400, TimeUnit.MILLISECONDS))
+                .zipWith(Observable.timer(500, TimeUnit.MILLISECONDS))
                 .map { it.first }
                 .repeat()
                 .takeUntil { flag.get() }

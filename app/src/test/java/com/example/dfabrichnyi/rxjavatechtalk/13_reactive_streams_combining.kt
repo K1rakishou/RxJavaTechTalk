@@ -22,7 +22,7 @@ class `13_reactive_streams_combining` {
         Observables.zip(timer1, timer2)
                 .subscribe({ value -> println("timer1 = ${value.first}, timer2 = ${value.second}") })
 
-        Thread.sleep(10000)
+        Thread.sleep(5000)
     }
 
     /**
@@ -37,7 +37,7 @@ class `13_reactive_streams_combining` {
         Observables.combineLatest(timer1, timer2)
                 .subscribe({ value -> println("timer1 = ${value.first}, timer2 = ${value.second}") })
 
-        Thread.sleep(10000)
+        Thread.sleep(5000)
     }
 
     /**
@@ -53,7 +53,7 @@ class `13_reactive_streams_combining` {
         timer2.withLatestFrom(timer1)
                 .subscribe({ value -> println("timer2 = ${value.first}, timer1 = ${value.second}") })
 
-        Thread.sleep(10000)
+        Thread.sleep(5000)
     }
 }
 

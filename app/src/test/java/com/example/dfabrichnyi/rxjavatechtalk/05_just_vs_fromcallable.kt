@@ -13,7 +13,7 @@ class `05_just_vs_fromcallable` {
         val currentThreadName = Thread.currentThread().name
 
         println("current thread name = $currentThreadName")
-        assertNotEquals("Cannot be executed on the main thread!", "main", currentThreadName)
+        assertNotEquals("Cannot be executed on main thread!", "main", currentThreadName)
 
         //симуляция какой-либо долгой операции
         Thread.sleep(500)

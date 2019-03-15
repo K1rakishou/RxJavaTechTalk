@@ -1,6 +1,5 @@
 package com.example.dfabrichnyi.rxjavatechtalk
 
-import io.reactivex.processors.PublishProcessor
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.*
 import org.junit.Test

@@ -28,7 +28,6 @@ class why {
     sealed class PermissionState {
         object Uninitialized : PermissionState()
         data class Granted(val permissions: List<String>) : PermissionState()
-        data class Denied(val permissions: List<String>) : PermissionState()
     }
 
     data class State(val lifecycle: Lifecycle,
@@ -43,7 +42,9 @@ class why {
         }
 
         override fun toString(): String {
-            return "[lifecycle = ${lifecycle}, camera = ${cameraState}, permissions = ${permissionState}]"
+            return "[lifecycle = ${lifecycle::class.java.simpleName}, " +
+                    "camera = ${cameraState::class.java.simpleName}, " +
+                    "permissions = ${permissionState::class.java.simpleName}]"
         }
     }
 
@@ -86,7 +87,8 @@ class why {
     fun test() {
         val lifecycleState = BehaviorSubject.createDefault<Lifecycle>(Lifecycle.Destroyed)
         val cameraState = BehaviorSubject.createDefault<CameraState>(CameraState.Destroyed)
-        val permissionsState = BehaviorSubject.createDefault<PermissionState>(PermissionState.Uninitialized)
+        val permissionsState = BehaviorSubject.createDefault<PermissionState>(
+                PermissionState.Uninitialized)
 
         println("START")
 
@@ -128,6 +130,7 @@ class why {
 
         Observable.interval(500, TimeUnit.MILLISECONDS).withLatestFrom(stateObservable)
                 .map { it.second }
+                .doOnNext { state -> println(state) }
                 .filter { state -> state.isStateOk() }
                 .map { getCurrentLocation() to takePicture() }
                 .flatMapSingle { (location, picture) ->

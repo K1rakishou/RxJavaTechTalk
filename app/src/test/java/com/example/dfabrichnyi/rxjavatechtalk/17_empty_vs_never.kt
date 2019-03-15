@@ -38,9 +38,6 @@ class `17_empty_vs_never` {
                 .subscribe({ println("value = $it") }, { }, { println("onComplete") })
     }
 
-    /**
-     * Что будет выведено?
-     * */
     @Test
     fun test3() {
         Observable.just(1, 2)
@@ -55,9 +52,6 @@ class `17_empty_vs_never` {
                 .subscribe({ println("value = $it") })
     }
 
-    /**
-     * Что будет выведено?
-     * */
     @Test
     fun test4() {
         Observable.just(1)
@@ -67,57 +61,13 @@ class `17_empty_vs_never` {
     }
 
 
-    /**
-     * Что будет выведено?
-     * */
     @Test
     fun test5() {
         Observable.just(1)
                 .filter { false }
-                .defaultIfEmpty(-12)
+                .switchIfEmpty { Observable.just(-12) }
                 .subscribe({ println("value = $it") })
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
