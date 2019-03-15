@@ -9,7 +9,7 @@ import java.util.concurrent.TimeoutException
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
-class `18_repeat_retry_take` {
+class `19_repeat_retry_take` {
 
     /**
      * Оператор repeat пропускает вниз по стриму всё что было в стриме и переподписывается на стрим

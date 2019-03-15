@@ -4,7 +4,7 @@ import org.junit.Test
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class `15_amb` {
+class `16_amb` {
 
     /**
      * Эмитит все элементы того обзервабла, который первым эмитит элемент
@@ -17,9 +17,9 @@ class `15_amb` {
     fun test() {
         val random = Random()
 
-        //random delay 100..200 ms
+        //random delay 0..200 ms
         fun getDelay(): Long {
-            return Math.abs(random.nextInt(100)).toLong() + 100
+            return Math.abs(random.nextInt(200)).toLong()
         }
 
         //simulate network request

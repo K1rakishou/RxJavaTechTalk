@@ -13,8 +13,7 @@ class `05_just_vs_fromcallable` {
         val currentThreadName = Thread.currentThread().name
 
         println("current thread name = $currentThreadName")
-        assertNotEquals("Cannot be executed on the main thread!",
-                "main", currentThreadName)
+        assertNotEquals("Cannot be executed on the main thread!", "main", currentThreadName)
 
         //симуляция какой-либо долгой операции
         Thread.sleep(500)
@@ -69,9 +68,9 @@ class `05_just_vs_fromcallable` {
 
 
     /**
-     * Для того чтобы попасть из императивного мира в реактивный многие использую оператор just
-     * передавая в него функцию и не понимая, что этот оператор принимает КОНСТАНТУ,
-     * т.е. готовый результат, а не функцию. Это означает, что в данном случае longRunningOperation
+     * Есть много способов для попадания из императивного мира в реактивный. Один из них - оператор just.
+     * Однако у него есть подводный камень - этот оператор ожидает на входе константу, т.е. готовый
+     * результат, а не функцию. Это означает, что в данном случае сначала longRunningOperation
      * будет выполнена в основном потоке и только ПОСЛЕ ЭТОГО результат будет передан оператору just.
      * */
     @Test
@@ -140,7 +139,8 @@ class `05_just_vs_fromcallable` {
 
 
     /**
-     * Для удобного вызова синхронных функций в rxjava есть оператор fromCallable
+     * Для того чтобы выполнить какую-либо синхронную функцию в реактивном стриме есть
+     * оператор fromCallable
      * */
     @Test
     fun test2() {

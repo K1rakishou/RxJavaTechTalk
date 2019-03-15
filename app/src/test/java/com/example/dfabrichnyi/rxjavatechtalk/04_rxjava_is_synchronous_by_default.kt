@@ -76,8 +76,7 @@ class `04_rxjava_is_synchronous_by_default` {
 
     /**
      * Исключения составляют операторы по-умолчанию работающие на каком-то шедулере,
-     * например timer или interval (они помечены аннотацией @SchedulerSupport). Почти все они
-     * работают на Schedulers.computation()
+     * например timer или interval (они помечены аннотацией @SchedulerSupport).
      * */
     @Test
     fun test_zip_with_timer() {

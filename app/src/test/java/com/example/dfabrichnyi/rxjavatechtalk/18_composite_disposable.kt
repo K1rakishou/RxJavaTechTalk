@@ -5,7 +5,7 @@ import io.reactivex.rxkotlin.zipWith
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
-class `17_composite_disposable` {
+class `18_composite_disposable` {
 
     /**
      * Clear отписывается от каждого сохранённого disposable и очищает свой внутренний список,

@@ -20,7 +20,7 @@ class `06_fromcallable_vs_defer` {
 
     @Test
     fun test2() {
-        Observable.defer { Observable.just(1, 2, 3, 4) }
+        Observable.defer { Observable.just(1, 2, 3, 4) } //в данном случае аналогично Observable.just(1, 2, 3, 4)
                 .subscribe({ println("value = $it") })
     }
 }

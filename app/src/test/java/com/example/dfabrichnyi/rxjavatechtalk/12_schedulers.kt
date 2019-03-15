@@ -9,9 +9,43 @@ class `12_schedulers` {
      * subscribeOn указывает на каком шедулере будет выполнен observable source и весь стрим после него
      * (либо до следующего observeOn) в независимости от того, в каком месте в цепочке операторов он
      * был вызван.
+     * SubscribeOn шедулит обзёрвабл в subscribeActual, observeOn в onNext
+     * */
+
+    /** Что будет если попытаться вызвать несколько subscribeOm подряд? */
+    @Test
+    fun testMultipleSubscribeOn() {
+        Observable.just(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.computation())
+                .subscribe({ println("value: $it, thread: ${Thread.currentThread().name}") })
+
+        Thread.sleep(1000)
+    }
+
+
+     /**
      * observeOn указывает на каком шедулере будут выполнены операторы стоящии ниже по стриму,
      * либо до следующего observeOn
      * */
+
+     @Test
+     fun testMultipleObserveOn() {
+         Observable.just(0)
+                 .doOnNext { println("value: $it, thread: ${Thread.currentThread().name}") }
+                 .observeOn(Schedulers.trampoline())
+                 .doOnNext { println("value: $it, thread: ${Thread.currentThread().name}") }
+                 .observeOn(Schedulers.newThread())
+                 .doOnNext { println("value: $it, thread: ${Thread.currentThread().name}") }
+                 .observeOn(Schedulers.io())
+                 .doOnNext { println("value: $it, thread: ${Thread.currentThread().name}") }
+                 .observeOn(Schedulers.computation())
+                 .doOnNext { println("value: $it, thread: ${Thread.currentThread().name}") }
+                 .subscribe()
+
+         Thread.sleep(1000)
+     }
 
     /**
      * Schedulers.io - Используется неограниченный пул потоков. Если в пуле есть свободный поток,
@@ -21,11 +55,10 @@ class `12_schedulers` {
      *
      * Schedulers.computation - Используется ограниченный пул потоков
      * (кол-во потоков == кол-во ядер процессора)
-     * Подходит для тяжёлых задач, которые активно юзают CPU (типа архивации или высчитывания
-     * какой-нибудь хуйни (например, брутфорс MD5 хешей))
+     * Подходит для тяжёлых задач, которые активно юзают CPU (типа архивации или каких-нибудь вычислений)
      *
-     * Schedulers.newThread - создаёт новый поток при каждом (не совсем) обращении к шедулеру.
-     * Лучше не использовать. Если очень нужно, то следует заюзать Schedulers.from(Executor())
+     * Schedulers.newThread - создаёт каждый раз новый поток. Использовать осторожно. Может стать
+     * причиной ООМ. Лучше использовать Schedulers.from(Executor()) с конечным кол-вом потоков.
      *
      * Schedulers.trampoline - Выполняет всё на том потоке с которого было запущено. Юзается для тестов
      *
@@ -36,7 +69,7 @@ class `12_schedulers` {
     
     /**
      * Важно понимать как работает применение шедулера к элементам реактивного стрима, т.е. в какой
-     * момент шедулер решает на какой потоке будет выполнен тот или иной оператор. А происходит это в
+     * момент шедулер решает на каком потоке будет выполнен тот или иной оператор. А происходит это в
      * момент создания стрима. Как момжно видеть ниже хоть мы и используем шедулер который,
      * как может показаться, должен выполнять сабскрайб каждый раз на новом потоке, в действительности
      * выполняется каждый раз на одном и том же потоке. Потому что стрим создаётся один раз и
@@ -51,6 +84,9 @@ class `12_schedulers` {
         Thread.sleep(1000)
     }
 
+    /**
+     * То же самое с observeOn
+     * */
     @Test
     fun newThread2() {
         Observable.just(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)

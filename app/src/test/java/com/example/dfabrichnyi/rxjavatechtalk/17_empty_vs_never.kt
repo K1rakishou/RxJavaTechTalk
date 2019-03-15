@@ -2,7 +2,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import org.junit.Test
 
-class `16_empty_vs_never` {
+class `17_empty_vs_never` {
 
     /**
      * Observable.empty возвращает обзервабл который не эмитит никаких элементов,
